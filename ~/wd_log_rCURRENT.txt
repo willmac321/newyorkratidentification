@@ -1,7 +1,0 @@
-INFO [process_setup] [2026-02-14:17:08:19 WD-TabNine INFO] 
-============ Tabnine process /home/wm/.vim/plugged/tabnine-nvim/binaries/4.321.0/x86_64-unknown-linux-musl/WD-TabNine (1232948) started ============
-INFO [process_setup] [2026-02-14:17:08:19 WD-TabNine INFO] 
-============ Tabnine process /home/wm/.vim/plugged/tabnine-nvim/binaries/4.321.0/x86_64-unknown-linux-musl/WD-TabNine (1232953) started ============
-INFO [WD_TabNine] [2026-02-14:17:08:19 WD-TabNine INFO] terminating because another watchdog is already running.
-INFO [watchdog_server::monitor_loop] [2026-02-14:17:08:19 WD-TabNine INFO] watching new process 1232840-TabNine
-INFO [watchdog_server::monitor_loop] [2026-02-14:17:08:27 WD-TabNine INFO] watching new process 1232982-TabNine
