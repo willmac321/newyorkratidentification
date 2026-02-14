@@ -1,0 +1,22 @@
+INFO [process_setup] [2026-02-14:16:49:49 WD-TabNine INFO] 
+============ Tabnine process /home/wm/.vim/plugged/tabnine-nvim/binaries/4.321.0/x86_64-unknown-linux-musl/WD-TabNine (1208372) started ============
+INFO [process_setup] [2026-02-14:16:49:49 WD-TabNine INFO] 
+============ Tabnine process /home/wm/.vim/plugged/tabnine-nvim/binaries/4.321.0/x86_64-unknown-linux-musl/WD-TabNine (1208377) started ============
+INFO [WD_TabNine] [2026-02-14:16:49:49 WD-TabNine INFO] terminating because another watchdog is already running.
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:49:49 WD-TabNine INFO] watching new process 1208269-TabNine
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:49:57 WD-TabNine INFO] watching new process 1208380-TabNine
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:51:09 WD-TabNine INFO] watching new process 1211440-TabNine-deep-cloud
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:51:25 WD-TabNine INFO] stop watching process 1208380-TabNine
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:51:25 WD-TabNine INFO] stop watching process 1211440-TabNine-deep-cloud
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:51:25 WD-TabNine INFO] stop watching process 1208269-TabNine
+INFO [process_setup] [2026-02-14:16:51:45 WD-TabNine INFO] 
+============ Tabnine process /home/wm/.vim/plugged/tabnine-nvim/binaries/4.321.0/x86_64-unknown-linux-musl/WD-TabNine (1214696) started ============
+INFO [process_setup] [2026-02-14:16:51:45 WD-TabNine INFO] 
+============ Tabnine process /home/wm/.vim/plugged/tabnine-nvim/binaries/4.321.0/x86_64-unknown-linux-musl/WD-TabNine (1214701) started ============
+INFO [WD_TabNine] [2026-02-14:16:51:45 WD-TabNine INFO] terminating because another watchdog is already running.
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:51:45 WD-TabNine INFO] watching new process 1214585-TabNine
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:51:53 WD-TabNine INFO] watching new process 1214704-TabNine
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:52:09 WD-TabNine INFO] watching new process 1216323-TabNine-deep-cloud
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:52:33 WD-TabNine INFO] stop watching process 1216323-TabNine-deep-cloud
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:52:33 WD-TabNine INFO] stop watching process 1214704-TabNine
+INFO [watchdog_server::monitor_loop] [2026-02-14:16:52:33 WD-TabNine INFO] stop watching process 1214585-TabNine
