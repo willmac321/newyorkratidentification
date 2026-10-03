@@ -1,0 +1,461 @@
+/* Neon motel sign: pixel pass. Square corners, hard outlines, stepped gradients. */
+
+.rat-check-inn {
+  --ink-outline: #10181a;
+  --cream: #f4e7c8;
+  --cream-shadow: #b9a47c;
+  --ink: #2b1a12;
+  --placard-red: #a8212c;
+  --turquoise: #3ff3e6;
+  --pink: #ff3d8b;
+
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px 48px;
+  box-sizing: border-box;
+}
+
+.rat-check-inn__column {
+  width: 100%;
+  max-width: 600px;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---- Headboard ---- */
+
+.inn-sign {
+  position: relative;
+  width: 92%;
+  z-index: 3;
+}
+
+.inn-sign__badge {
+  position: absolute;
+  top: -18px;
+  right: -14px;
+  z-index: 2;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #d7263d;
+  color: #fff4e0;
+  font-family: Silkscreen, monospace;
+  font-size: 11px;
+  line-height: 1.1;
+  transform: rotate(8deg);
+  box-shadow: 0 0 0 4px var(--ink-outline), 0 5px 0 4px #7d1220, 6px 12px 0 rgba(0, 0, 0, 0.4);
+}
+
+.inn-sign__badge-year {
+  font-size: 18px;
+}
+
+.inn-sign__headboard {
+  padding: 26px 56px 34px;
+  background: linear-gradient(180deg, #36b5a8 0 50%, #2aa397 50% 75%, #1f8f84 75%);
+  box-shadow:
+    inset 0 0 0 5px var(--cream),
+    inset 0 0 0 9px #1f8f84,
+    inset 0 2px 0 9px rgba(255, 255, 255, 0.25),
+    0 0 0 4px var(--ink-outline),
+    0 12px 0 4px #0f4f49,
+    12px 24px 0 rgba(0, 0, 0, 0.4);
+}
+
+.neon-script {
+  margin: 4px 0;
+  font-family: Yellowtail, cursive;
+  font-weight: 400;
+  font-size: clamp(36px, 8.5vw, 60px);
+  line-height: 1.05;
+  color: #fff3f6;
+  text-shadow: 0 0 3px #fff, 0 0 8px var(--pink), 0 0 18px var(--pink), 0 0 34px #ff0066,
+    4px 4px 0 #0f4f49;
+  text-wrap: balance;
+}
+
+.neon-tube {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 6px 18px;
+  background: var(--ink-outline);
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.8), 0 3px 0 #0f4f49;
+}
+
+.neon-tube__text {
+  --hue: var(--turquoise);
+  font-family: Silkscreen, monospace;
+  font-size: clamp(20px, 5vw, 30px);
+  letter-spacing: 4px;
+  color: #f2fffe;
+  text-shadow: 0 0 3px #fff, 0 0 8px var(--hue), 0 0 18px var(--hue), 0 0 30px var(--hue);
+}
+
+.neon-tube__text--pink {
+  --hue: var(--pink);
+}
+
+.inn-poles {
+  width: 70%;
+  height: 26px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.inn-poles span {
+  width: 12px;
+  background: linear-gradient(90deg, #5a5a5a 0 25%, #d8d8d8 25% 50%, #9a9a9a 50% 75%, #5a5a5a 75%);
+}
+
+/* ---- Bulbs ---- */
+
+.neon-bulbs--row {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.neon-bulbs--perimeter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bulb {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #b39466 0 25%, #6e5330 25% 75%, #3d2a12 75%);
+  box-shadow: 0 0 0 3px #3a2a1a, inset 0 -3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.neon-bulbs--perimeter .bulb {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  margin: -7.5px 0 0 -7.5px;
+}
+
+/* Lit layer; the chase animates its opacity. */
+.bulb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #fff 0 25%, #ffe08a 25% 50%, #ffc23d 50% 80%, #c97a00 80%);
+  box-shadow: 0 0 0 3px #3a2a1a, 0 0 0 2px #ffd166, 0 0 14px 6px rgba(255, 170, 40, 0.6);
+  animation-timing-function: step-end;
+  animation-iteration-count: infinite;
+}
+
+/* One tick = 170ms. Idle: bulb i is dark when (i + tick) % 4 === 0. */
+.neon-bulbs--idle .bulb::after {
+  animation-name: bulb-chase-4;
+  animation-duration: 680ms;
+  animation-delay: calc(var(--i) * -170ms);
+}
+
+/* Analyzing: alternating, lit when (i + tick) % 2 === 0. */
+.neon-bulbs--analyzing .bulb::after {
+  animation-name: bulb-alternate;
+  animation-duration: 340ms;
+  animation-delay: calc(var(--i) * -170ms);
+}
+
+/* Done: everything flashes together. */
+.neon-bulbs--done .bulb::after {
+  animation-name: bulb-alternate;
+  animation-duration: 680ms;
+}
+
+@keyframes bulb-chase-4 {
+  0% { opacity: 0; }
+  25%, 100% { opacity: 1; }
+}
+
+@keyframes bulb-alternate {
+  0% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ---- Panel + drop zone ---- */
+
+.inn-panel {
+  position: relative;
+  width: 100%;
+  padding: 34px;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #a8212c 0 50%, #951d27 50% 75%, #7f1820 75%);
+  box-shadow:
+    inset 0 0 0 4px var(--cream),
+    inset 0 3px 0 4px rgba(255, 255, 255, 0.18),
+    0 0 0 4px var(--ink-outline),
+    0 12px 0 4px #4d0d13,
+    12px 26px 0 rgba(0, 0, 0, 0.4);
+}
+
+.drop-zone {
+  --tube: var(--turquoise);
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 28px 20px;
+  box-sizing: border-box;
+  background: #140b0e;
+  box-shadow:
+    inset 0 6px 0 rgba(0, 0, 0, 0.6),
+    0 0 0 4px var(--tube),
+    0 0 0 8px #140b0e,
+    0 0 0 12px var(--tube),
+    0 0 18px 10px var(--tube);
+}
+
+.drop-zone--dragging {
+  --tube: var(--pink);
+}
+
+.drop-zone__head {
+  font-family: Silkscreen, monospace;
+  font-size: clamp(26px, 6vw, 38px);
+  line-height: 1.05;
+  color: #eafffd;
+  text-shadow: 0 0 3px #fff, 0 0 10px var(--turquoise), 0 0 24px #1fd1c4, 0 0 40px #1fd1c4;
+}
+
+/* Failing tube: dark on ticks 0, 2, 9, 10, 11 of every 24. */
+.drop-zone__head--flicker {
+  animation: neon-fail 4080ms step-end infinite;
+}
+
+@keyframes neon-fail {
+  0%, 8.3333%, 37.5% { color: #2c3d3c; text-shadow: none; }
+  4.1667%, 12.5%, 50%, 100% {
+    color: #eafffd;
+    text-shadow: 0 0 3px #fff, 0 0 10px var(--turquoise), 0 0 24px #1fd1c4, 0 0 40px #1fd1c4;
+  }
+}
+
+.drop-zone__sub {
+  max-width: 360px;
+  margin: 0;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 16px;
+  color: var(--cream);
+  text-wrap: pretty;
+}
+
+.drop-zone__fine {
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #c9b9a0;
+  text-transform: uppercase;
+}
+
+.drop-zone__credit {
+  margin: 0;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 12px;
+  color: #c9b9a0;
+}
+
+.drop-zone__credit a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.drop-zone__credit a:focus-visible {
+  outline: 2px solid var(--turquoise);
+  outline-offset: 2px;
+}
+
+.inn-button {
+  border: none;
+  border-radius: 0;
+  padding: 14px 30px;
+  font-family: Silkscreen, monospace;
+  font-size: 18px;
+  letter-spacing: 2px;
+  background: var(--cream);
+  color: #7f1820;
+  box-shadow: 0 0 0 4px var(--ink-outline), 0 6px 0 4px var(--cream-shadow);
+  transition: none;
+}
+
+.inn-button--small {
+  padding: 12px 24px;
+  font-size: 15px;
+}
+
+.inn-button:hover {
+  border-color: transparent;
+}
+
+.inn-button:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 4px var(--ink-outline), 0 2px 0 4px var(--cream-shadow);
+}
+
+.inn-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.inn-button:focus-visible {
+  outline: 2px solid var(--turquoise);
+  outline-offset: 3px;
+}
+
+/* ---- Polaroid ---- */
+
+.polaroid {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  margin: 0;
+  border: 8px solid var(--cream);
+  border-bottom-width: 30px;
+  background: var(--cream);
+  transform: rotate(1.5deg);
+  box-shadow: 0 0 0 4px var(--ink-outline), 10px 12px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* Clips a rat head that reaches past the photo's edge. */
+.polaroid__photo {
+  position: relative;
+  overflow: hidden;
+}
+
+.polaroid__photo > img:first-child {
+  display: block;
+  max-width: 100%;
+  max-height: 340px;
+}
+
+.polaroid__img--analyzing {
+  filter: brightness(0.45) sepia(0.6);
+}
+
+.polaroid figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -27px;
+  font-family: Yellowtail, cursive;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.rat-face-overlay {
+  position: absolute;
+  height: auto;
+  transform-origin: 38% 63%;
+  pointer-events: none;
+}
+
+/* ---- Disclaimer placard ---- */
+
+.placard {
+  position: relative;
+  width: 82%;
+  margin-top: 34px;
+  padding: 22px 26px 18px;
+  box-sizing: border-box;
+  text-align: left;
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: 0 0 0 4px var(--ink-outline), 0 6px 0 4px var(--cream-shadow),
+    10px 16px 0 rgba(0, 0, 0, 0.4);
+}
+
+.placard p {
+  margin: 0 0 14px;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.placard__title {
+  margin-bottom: 8px;
+  font-family: Silkscreen, monospace;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--placard-red);
+}
+
+.placard__screw {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #eee 0 50%, #777 50%);
+}
+
+.placard__screw--tl { top: 8px; left: 8px; }
+.placard__screw--tr { top: 8px; right: 8px; }
+.placard__screw--bl { bottom: 8px; left: 8px; }
+.placard__screw--br { bottom: 8px; right: 8px; }
+
+.placard__agree {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.placard__agree input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--placard-red);
+}
+
+.placard__nudge {
+  margin-top: 8px;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 14px;
+  color: var(--placard-red);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .inn-sign__headboard { padding: 22px 28px 30px; }
+  .inn-panel { padding: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bulb::after,
+  .drop-zone__head--flicker {
+    animation: none;
+  }
+  .bulb::after { opacity: 1; }
+}

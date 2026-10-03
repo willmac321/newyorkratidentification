@@ -133,7 +133,6 @@ function TalkingRat() {
   // Movement animation
   useEffect(() => {
     let animationFrameId: number
-    let directionChangeInterval: ReturnType<typeof setInterval>
 
     const animate = () => {
       setPosition((prev) => {
@@ -178,7 +177,7 @@ function TalkingRat() {
     animate()
 
     // Periodically change direction (every 3-6 seconds)
-    directionChangeInterval = setInterval(() => {
+    const directionChangeInterval = setInterval(() => {
       if (!isMouthOpen) {
         velocityRef.current = generateNewDirection()
       }

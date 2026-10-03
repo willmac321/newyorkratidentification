@@ -7,7 +7,7 @@ A Vite + React + TypeScript SPA application ready for Firebase deployment.
 ### Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Development
@@ -15,7 +15,7 @@ npm install
 Run the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 The app will be available at `http://localhost:5173`
@@ -25,7 +25,7 @@ The app will be available at `http://localhost:5173`
 Build for production:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 The production build will be in the `dist` directory.
@@ -35,7 +35,7 @@ The production build will be in the `dist` directory.
 Preview the production build locally:
 
 ```bash
-npm run preview
+pnpm preview
 ```
 
 ## Firebase Deployment
@@ -44,7 +44,7 @@ npm run preview
 
 1. Install Firebase CLI (if not already installed):
    ```bash
-   npm install -g firebase-tools
+   pnpm add -g firebase-tools
    ```
 
 2. Login to Firebase:
@@ -52,29 +52,28 @@ npm run preview
    firebase login
    ```
 
-3. Initialize Firebase (if not already done):
+3. Link the Firebase project (creates the git-ignored `.firebaserc`):
    ```bash
-   firebase init
+   firebase projects:list
+   firebase use --add <project-id>
    ```
-   - Select "Hosting"
-   - Use existing project or create new one
-   - Set public directory to `dist`
-   - Configure as single-page app: Yes
-   - Set up automatic builds: No (manual deployment)
-
-4. Update `.firebaserc` with your Firebase project ID
+   `firebase.json` already targets the `nycratidentification` hosting site.
 
 ### Deploy
 
 1. Build the application:
    ```bash
-   npm run build
+   pnpm build
    ```
 
 2. Deploy to Firebase:
    ```bash
    firebase deploy --only hosting
    ```
+
+Optional:
+- `firebase hosting:channel:deploy preview` — deploy to a temporary preview URL first
+- `firebase hosting:rollback` — revert to the previous release
 
 ## Project Structure
 
@@ -99,3 +98,10 @@ nycRatIdent/
 - **React Router** - Client-side routing
 - **Firebase Hosting** - Static site hosting
 
+## Credits
+
+- Rat head overlay (`public/rat-head.png`): head cut out of
+  [Fancy rat blaze.jpg](https://commons.wikimedia.org/wiki/File:Fancy_rat_blaze.jpg)
+  by AlexK100, licensed
+  [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The cutout
+  is shared under the same license.

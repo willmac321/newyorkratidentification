@@ -19,12 +19,6 @@ html {
   overflow: hidden;
 }
 
-html,
-body,
-* {
-  cursor: url('/rat-cursor.svg') 8 8, auto;
-}
-
 a {
   font-weight: 500;
   color: #646cff;
