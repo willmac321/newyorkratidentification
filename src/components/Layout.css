@@ -7,3 +7,27 @@
 .main-content {
   flex: 1;
 }
+
+/* Top-left switch between the Rat Check Inn and the inspection map */
+.page-switch {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1100;
+  padding: 8px 12px;
+  font-family: Silkscreen, monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #2b1a12;
+  background: #f4e7c8;
+  box-shadow: 0 0 0 3px #10181a, 4px 6px 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.page-switch:hover {
+  color: #a8212c;
+}
+
+.page-switch:focus-visible {
+  outline: 3px solid #3ff3e6;
+  outline-offset: 4px;
+}
